@@ -42,4 +42,42 @@ class BD
 
         return $st;
     }
+
+    public function update($dados)
+    {   
+        $conn = $this->conn();
+        $sql = "UPDATE usuario SET 'nome' = ?, 'telefone'= ?,
+                     'cpf'= ? WHERE 'id' = ?";
+
+        $st = $conn->prepare($sql);
+        $arrayDados = [$dados['nome'], $dados['telefone'],
+                 $dados['cpf'], $dados['id']];
+        $st->execute($arrayDados);
+
+        return $st;
+    }
+
+    public function remover($id)
+    {   
+        $conn = $this->conn();
+        $sql = "DELETE FROM usuario WHERE id = ?";
+
+        $st = $conn->prepare($sql);
+        $arrayDados = [$id];
+        $st->execute($arrayDados);
+
+        return $st;
+    }
+
+    public function buscar($id)
+    {   
+        $conn = $this->conn();
+        $sql = "SELECT * FROM usuario WHERE id = ?";
+
+        $st = $conn->prepare($sql);
+        $arrayDados = [$id];
+        $st->execute($arrayDados);
+
+        return $st->fetchObject();
+    }
 }

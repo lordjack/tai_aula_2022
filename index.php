@@ -1,6 +1,3 @@
-<?php
-include "./database/bd.php";
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,35 +9,7 @@ include "./database/bd.php";
 </head>
 
 <body>
-    <?php
-    $objBD = new BD();
-    $objBD->conn();
-    $result = $objBD->select();
-    foreach ($result as $item) {
-        echo "ID" . $item['id'] . " Nome: " . $item['nome'] .
-        " Telefone: " . $item['telefone'] . " CPF: " . $item['cpf'] . "<br>";
-    }
-
-    if (!empty($_POST)) {
-        echo "Salvar<br>";
-        var_dump($_POST);
-        $objBD->inserir($_POST);
-        header("Location: index.php");
-    }
-    ?>
-    <h2>Formulário Cliente</h2>
-    <form action="index.php" method="post">
-        <label>Nome</label>
-        <input type="text" name="nome" /><br>
-
-        <label>Telefone</label>
-        <input type="text" name="telefone" /><br>
-
-        <label>CPF</label>
-        <input type="text" name="cpf" /><br>
-
-        <input type="submit" value="Salvar" />
-    </form>
+    <h2>CRUD Usuário</h2>
+    <a href="./pagina/usuarioList.php">Ver</a>
 </body>
-
 </html>
