@@ -22,7 +22,7 @@ include "../database/bd.php";
     }
     if (!empty($_POST)) {
 
-        if (empty($_GET['id'])) {
+        if (empty($_POST['id'])) {
             $objBD->inserir($_POST);
         } else {
             $objBD->update($_POST);

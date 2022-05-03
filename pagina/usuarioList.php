@@ -13,17 +13,25 @@ include "../database/bd.php";
 
 <body>
     <h2>Listagem Clientes</h2>
+    <form action="./usuarioList.php" method="post">
+        <input type="search" name="nome" placeholder="Pesquisar nome">
+        <input type="submit" value="Pesquisar">
+    </form>
     <a href="./usuarioForm.php">Cadastrar</a> <br>
     <?php
     $objBD = new BD();
     $objBD->conn();
 
-    if(!empty($_GET['id'])) {
+    if (!empty($_POST['nome'])) {
+        $result = $objBD->pesquisar($_POST);
+    } else {
+        $result = $objBD->select();
+    }
+
+    if (!empty($_GET['id'])) {
         $objBD->remover($_GET['id']);
         header("location: usuarioList.php");
     }
-
-    $result = $objBD->select();
 
     echo "<table>
                 <tr>
@@ -39,17 +47,18 @@ include "../database/bd.php";
         echo "
         <tr>
             <td>" . $item['id'] . "</td>
-            <td>" . $item['nome'] ."</td>
-            <td>" . $item['telefone'] ."</td>
-            <td>" . $item['cpf'] ."</td>
+            <td>" . $item['nome'] . "</td>
+            <td>" . $item['telefone'] . "</td>
+            <td>" . $item['cpf'] . "</td>
             <td><a href='./usuarioForm.php?id=" . $item['id'] . "'>Editar</a></td>
             <td><a href='./usuarioList.php?id=" . $item['id'] . "'
-                   onclick=\"return confirm('Quer Excluir?') \" >Deletar</a></td>
+                   onclick=\"return confirm('Deseja realmente remover o registro?') \" >Deletar</a></td>
         </tr>";
     }
     echo "</table>";
     ?>
 
-     <a href="../index.php">Voltar</a>
+    <a href="../index.php">Voltar</a>
 </body>
+
 </html>

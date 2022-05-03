@@ -7,7 +7,7 @@ class BD
     private $dbname = "db_aula_tai";
     private $port = 3306;
     private $usuario = "root";
-    private $senha = "";
+    private $senha = "123456";
     private $db_charset = "utf8";
 
     public function conn()
@@ -44,23 +44,23 @@ class BD
     }
 
     public function update($dados)
-    {   
-        var_dump($dados);
-        exit;
+    {
         $conn = $this->conn();
-        $sql = "UPDATE usuario SET 'nome' = ?, 'telefone'= ?,
-                     'cpf'= ? WHERE 'id' = ?";
+        $sql = "UPDATE usuario SET nome = ?, telefone= ?,
+                     cpf= ? WHERE id = ?";
 
         $st = $conn->prepare($sql);
-        $arrayDados = [$dados['nome'], $dados['telefone'],
-                 $dados['cpf'], $dados['id']];
+        $arrayDados = [
+            $dados['nome'], $dados['telefone'],
+            $dados['cpf'], $dados['id']
+        ];
         $st->execute($arrayDados);
 
         return $st;
     }
 
     public function remover($id)
-    {   
+    {
         $conn = $this->conn();
         $sql = "DELETE FROM usuario WHERE id = ?";
 
@@ -72,7 +72,7 @@ class BD
     }
 
     public function buscar($id)
-    {   
+    {
         $conn = $this->conn();
         $sql = "SELECT * FROM usuario WHERE id = ?";
 
@@ -81,5 +81,17 @@ class BD
         $st->execute($arrayDados);
 
         return $st->fetchObject();
+    }
+
+    public function pesquisar($dados)
+    {
+        $conn = $this->conn();
+        $sql = "SELECT * FROM usuario WHERE nome LIKE ?;";
+
+        $st = $conn->prepare($sql);
+        $arrayDados = ["%" . $dados["nome"] . "%"];
+        $st->execute($arrayDados);
+
+        return $st;
     }
 }
