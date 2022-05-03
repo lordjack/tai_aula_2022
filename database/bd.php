@@ -45,6 +45,8 @@ class BD
 
     public function update($dados)
     {   
+        var_dump($dados);
+        exit;
         $conn = $this->conn();
         $sql = "UPDATE usuario SET 'nome' = ?, 'telefone'= ?,
                      'cpf'= ? WHERE 'id' = ?";
