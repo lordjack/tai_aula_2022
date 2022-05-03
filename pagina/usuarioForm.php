@@ -18,6 +18,7 @@ include "../database/bd.php";
 
     if (!empty($_GET['id'])) {
         $result = $objBD->buscar($_GET['id']);
+        //select * from usuario where id = ?
     }
     if (!empty($_POST)) {
 

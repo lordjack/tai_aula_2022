@@ -17,6 +17,12 @@ include "../database/bd.php";
     <?php
     $objBD = new BD();
     $objBD->conn();
+
+    if(!empty($_GET['id'])) {
+        $objBD->remover($_GET['id']);
+        header("location: usuarioList.php");
+    }
+
     $result = $objBD->select();
 
     echo "<table>
@@ -25,6 +31,8 @@ include "../database/bd.php";
                     <th>Nome</th>
                     <th>Telefone</th>
                     <th>CPF</th>
+                    <th>Ação</th>
+                    <th>Ação</th>
                 </tr>
             ";
     foreach ($result as $item) {
@@ -35,6 +43,8 @@ include "../database/bd.php";
             <td>" . $item['telefone'] ."</td>
             <td>" . $item['cpf'] ."</td>
             <td><a href='./usuarioForm.php?id=" . $item['id'] . "'>Editar</a></td>
+            <td><a href='./usuarioList.php?id=" . $item['id'] . "'
+                   onclick=\"return confirm('Quer Excluir?') \" >Deletar</a></td>
         </tr>";
     }
     echo "</table>";
