@@ -15,17 +15,18 @@ include "../database/bd.php";
     <?php
     $objBD = new BD();
     $objBD->conn();
+    $tb_nome = "usuario";
 
     if (!empty($_GET['id'])) {
-        $result = $objBD->buscar($_GET['id']);
+        $result = $objBD->buscar($tb_nome, $_GET['id']);
         //select * from usuario where id = ?
     }
     if (!empty($_POST)) {
 
         if (empty($_POST['id'])) {
-            $objBD->inserir($_POST);
+            $objBD->inserir($tb_nome, $_POST);
         } else {
-            $objBD->update($_POST);
+            $objBD->update($tb_nome, $_POST);
         }
         header("Location: ./usuarioList.php");
     }

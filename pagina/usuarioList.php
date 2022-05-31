@@ -14,22 +14,26 @@ include "../database/bd.php";
 <body>
     <h2>Listagem Clientes</h2>
     <form action="./usuarioList.php" method="post">
-        <input type="search" name="nome" placeholder="Pesquisar nome">
-        <input type="submit" value="Pesquisar">
+        <input type="text" name="valor" placeholder="Pesquisar Nome" />
+        <select name="tipo">
+            <option value="nome" selected>Nome</option>
+            <option value="cpf">CPF</option>
+        </select>
     </form>
     <a href="./usuarioForm.php">Cadastrar</a> <br>
     <?php
     $objBD = new BD();
     $objBD->conn();
+    $tb_name = "usuario";
 
     if (!empty($_POST['nome'])) {
-        $result = $objBD->pesquisar($_POST);
+        $result = $objBD->pesquisar($tb_name, $_POST);
     } else {
-        $result = $objBD->select();
+        $result = $objBD->select($tb_name);
     }
 
     if (!empty($_GET['id'])) {
-        $objBD->remover($_GET['id']);
+        $objBD->remover($tb_name, $_GET['id']);
         header("location: usuarioList.php");
     }
 
