@@ -28,6 +28,9 @@
         <a class="nav-link" href="./usuarioList.php">Usuário</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="./produtoList.php">Produto</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link disabled" href="#">Desativado</a>
       </li>
     </ul>

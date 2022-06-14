@@ -4,11 +4,11 @@ include "./head.php";
 
 $objBD = new BD();
 $objBD->conn();
-$tb_nome = "usuario";
+$tb_nome = "produto";
 
 if (!empty($_GET['id'])) {
     $result = $objBD->buscar($tb_nome, $_GET['id']);
-    //select * from usuario where id = ?
+    //select * from produto where id = ?
 }
 if (!empty($_POST)) {
 
@@ -17,11 +17,11 @@ if (!empty($_POST)) {
     } else {
         $objBD->update($tb_nome, $_POST);
     }
-    header("Location: ./usuarioList.php");
+    header("Location: ./produtoList.php");
 }
 ?>
-<h2>Formulário Cliente</h2>
-<form action="./usuarioForm.php" method="post">
+<h2>Formulário Produto</h2>
+<form action="./produtoForm.php" method="post">
     <div class="row">
         <input type="hidden" name="id" value="<?php echo !empty($result->id) ? $result->id : "" ?>" /><br>
         <div class="col-4">
@@ -29,18 +29,22 @@ if (!empty($_POST)) {
             <input type="text" name="nome" class="form-control" value="<?php echo !empty($result->nome) ? $result->nome : "" ?>" /><br>
         </div>
         <div class="col-3">
-            <label>Telefone</label>
-            <input type="text" name="telefone" class="form-control" value="<?php echo !empty($result->telefone) ? $result->telefone : "" ?>" /><br>
+            <label>Lote</label>
+            <input type="text" name="lote" class="form-control" value="<?php echo !empty($result->telefone) ? $result->telefone : "" ?>" /><br>
+        </div>
+        <div class="col-3">
+            <label>Preço</label>
+            <input type="text" name="preco" class="form-control" value="<?php echo !empty($result->telefone) ? $result->telefone : "" ?>" /><br>
         </div>
     </div>
     <div class="row">
         <div class="col-3">
-            <label>CPF</label>
-            <input type="text" name="cpf" class="form-control" value="<?php echo !empty($result->cpf) ? $result->cpf : "" ?>" /><br>
+            <label>Imagem</label>
+            <input type="file" name="nome_imagem" class="form-control" value="<?php echo !empty($result->cpf) ? $result->cpf : "" ?>" /><br>
         </div>
     </div>
     <input type="submit" class="btn btn-success" value="Salvar" />
-    <a href="./usuarioList.php" class="btn btn-primary">Voltar</a> <br>
+    <a href="./produtoList.php" class="btn btn-primary">Voltar</a> <br>
 </form>
 <?php
 include "./footer.php";
