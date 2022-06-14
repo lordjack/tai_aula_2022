@@ -28,7 +28,7 @@ class BD
     {
         $conn = $this->conn();
         $sql = "INSERT INTO $nome_tabela (";
-
+        unset($dados['id']);//remove campo id do vetor dados
         $flag = 0;
         foreach ($dados as $campo => $valor) {
             $sql .= ($flag == 0) ? " $campo" : ", $campo";

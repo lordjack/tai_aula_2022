@@ -1,43 +1,45 @@
 <?php
 include "../database/bd.php";
+include "./head.php";
 ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <h2>Listagem Clientes</h2>
-    <form action="./usuarioList.php" method="post">
-        <input type="text" name="valor" placeholder="Pesquisar Nome" />
-        <select name="tipo">
-            <option value="nome" selected>Nome</option>
-            <option value="cpf">CPF</option>
-        </select>
+<h2>Listagem Clientes</h2>
+<div class="row">
+    <form action="./usuarioList.php" method="post" class="form-inline">
+        <div class="col">
+            <input type="text" name="valor" class="form-control mb-2 mr-sm-2" placeholder="Pesquisar" />
+        </div>
+        <div class="col">
+            <select name="tipo" class="custom-select">
+                <option value="nome" selected>Nome</option>
+                <option value="cpf">CPF</option>
+            </select>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-outline-success mb-2 mr-sm-0">Buscar</button>
+        </div>
+        <div class="col">
+            <a href="./usuarioForm.php" class="btn btn-primary">Cadastrar</a> <br>
+        </div>
     </form>
-    <a href="./usuarioForm.php">Cadastrar</a> <br>
-    <?php
-    $objBD = new BD();
-    $objBD->conn();
-    $tb_name = "usuario";
+</div>
 
-    if (!empty($_POST['nome'])) {
-        $result = $objBD->pesquisar($tb_name, $_POST);
-    } else {
-        $result = $objBD->select($tb_name);
-    }
+<?php
+$objBD = new BD();
+$objBD->conn();
+$tb_name = "usuario";
 
-    if (!empty($_GET['id'])) {
-        $objBD->remover($tb_name, $_GET['id']);
-        header("location: usuarioList.php");
-    }
+if (!empty($_POST['valor'])) {
+    $result = $objBD->pesquisar($tb_name, $_POST);
+} else {
+    $result = $objBD->select($tb_name);
+}
 
-    echo "<table>
+if (!empty($_GET['id'])) {
+    $objBD->remover($tb_name, $_GET['id']);
+    header("location: usuarioList.php");
+}
+
+echo "<table>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
@@ -47,8 +49,8 @@ include "../database/bd.php";
                     <th>Ação</th>
                 </tr>
             ";
-    foreach ($result as $item) {
-        echo "
+foreach ($result as $item) {
+    echo "
         <tr>
             <td>" . $item['id'] . "</td>
             <td>" . $item['nome'] . "</td>
@@ -58,11 +60,10 @@ include "../database/bd.php";
             <td><a href='./usuarioList.php?id=" . $item['id'] . "'
                    onclick=\"return confirm('Deseja realmente remover o registro?') \" >Deletar</a></td>
         </tr>";
-    }
-    echo "</table>";
-    ?>
-
-    <a href="../index.php">Voltar</a>
-</body>
-
-</html>
+}
+echo "</table>";
+?>
+<a href="../index.php">Voltar</a>
+<?php
+include "./footer.php";
+?>
